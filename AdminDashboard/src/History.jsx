@@ -23,32 +23,20 @@ function createData(id, dessert, calories, fat, carbs, protein) {
 
 const columns = [
     {
-        width: 200,
-        label: 'Dessert',
-        dataKey: 'dessert',
+        width: 120,
+        label: 'Time',
+        dataKey: 'time',
     },
     {
         width: 120,
-        label: 'Calories\u00A0(g)',
-        dataKey: 'calories',
+        label: 'Speed',
+        dataKey: 'speed',
         numeric: true,
     },
     {
         width: 120,
-        label: 'Fat\u00A0(g)',
-        dataKey: 'fat',
-        numeric: true,
-    },
-    {
-        width: 120,
-        label: 'Carbs\u00A0(g)',
-        dataKey: 'carbs',
-        numeric: true,
-    },
-    {
-        width: 120,
-        label: 'Protein\u00A0(g)',
-        dataKey: 'protein',
+        label: 'Distance',
+        dataKey: 'distance',
         numeric: true,
     },
 ];
@@ -60,7 +48,7 @@ const rows = Array.from({ length: 200 }, (_, index) => {
 
 const VirtuosoTableComponents = {
     Scroller: React.forwardRef((props, ref) => (
-        <TableContainer component={Paper} {...props} ref={ref} />
+        <TableContainer component={Paper} {...props} ref={ref} sx={{ width: '800px' }} />
     )),
     Table: (props) => (
         <Table {...props} sx={{ borderCollapse: 'separate', tableLayout: 'fixed' }} />
@@ -73,12 +61,16 @@ const VirtuosoTableComponents = {
 function fixedHeaderContent() {
     return (
         <TableRow>
-            {columns.map((column) => (
+            {columns.map((column, index) => (
                 <TableCell
                     key={column.dataKey}
                     variant="head"
-                    align={column.numeric || false ? 'right' : 'left'}
-                    style={{ width: column.width }}
+                    align="center"  /*{column.numeric || false ? 'right' : 'left'}*/
+                    style={{ 
+                        width: column.width,
+                        borderBottom: '1px solid #ddd', // Menambahkan garis bawah
+                        borderRight: index !== columns.length - 1 ? '1px solid #ddd' : 'none' // Menambahkan garis kanan kecuali untuk kolom terakhir
+                    }}
                     sx={{
                         backgroundColor: 'background.paper',
                     }}
@@ -93,10 +85,14 @@ function fixedHeaderContent() {
 function rowContent(_index, row) {
     return (
         <React.Fragment>
-            {columns.map((column) => (
+            {columns.map((column, index) => (
                 <TableCell
                     key={column.dataKey}
                     align={column.numeric || false ? 'right' : 'left'}
+                    style={{
+                        borderBottom: '1px solid #ddd', // Menambahkan garis bawah
+                        borderRight: index !== columns.length - 1 ? '1px solid #ddd' : 'none' // Menambahkan garis kanan kecuali untuk kolom terakhir
+                    }}
                 >
                     {row[column.dataKey]}
                 </TableCell>
