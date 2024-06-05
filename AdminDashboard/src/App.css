@@ -1,3 +1,6 @@
+@import 'normalize.css';
+
+
 body {
   margin: 0;
   padding: 0;
@@ -65,7 +68,7 @@ body {
     "line-chart line-chart line-chart";
   gap: 1rem;
   height: 100vh; /* Menggunakan 100% tinggi viewport */
-  padding: 1rem;
+  padding: 0.5rem;
   box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
 }
 
@@ -75,7 +78,7 @@ body {
   height: 100%; /* Sesuaikan tinggi agar muat dalam grid */
   max-width: 100%; /* Pastikan tidak melebihi ukuran grid */
   max-height: 100%; /* Pastikan tidak melebihi ukuran grid */
-  padding: 10px;
+  padding: 0.9rem;
   box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
   border: 1px solid #ccc;
   background-color: #fff;
@@ -121,18 +124,6 @@ body {
   justify-content: space-between;
 }
 
-.line-chart {
-  grid-area: line-chart;
-  width: 100%; /* Sesuaikan lebar agar muat dalam grid */
-  height: 100%; /* Sesuaikan tinggi agar muat dalam grid */
-  padding: 0.5rem;
-  box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
-  border: 1px solid #ccc;
-  background-color: #fff;
-  flex-direction: column;
-  align-items: center;
-}
-
 .button {
   grid-area: button;
   display: flex;
@@ -146,11 +137,25 @@ body {
   color: white; /* Warna teks */
   border: none;
   padding: 10px 20px; /* Padding tombol */
-  font-size: 16px; /* Ukuran font */
   border-radius: 5px; /* Sudut melengkung */
   cursor: pointer;
 }
 
 .button button:hover {
   background-color: #0056b3; /* Warna biru lebih gelap saat hover */
+} 
+
+.line-chart {
+  grid-area: line-chart;
+  width: 100%; /* Sesuaikan lebar agar muat dalam grid */
+  height: 100%; /* Sesuaikan tinggi agar muat dalam grid */
+  padding: 0;
+  box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
+  border: 1px solid #ccc;
+  background-color: #fff;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
 }
+
+
