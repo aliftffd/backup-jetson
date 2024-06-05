@@ -6,13 +6,19 @@ body {
   font-family: "Poppins", sans-serif;
 }
 h2 {
-  font-size: 1.6rem;
+  font-size: 24px;
   color: #363949;
 }
 h3 {
-  font-size: 0.97rem;
+  font-size: 15px;
   color: #363949;
-  margin-top: -3px;
+  margin-top: 0px;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .value .unit {
@@ -21,240 +27,6 @@ h3 {
   color: #888; /* Warna font */
   font-weight: normal; /* Berat font */
   align-self: flex-end; /* Menyelaraskan satuan dengan bagian bawah angka */
-}
-
-.unit {
-  color: #000;
-}
-
-.text-muted {
-  color: #9e9ea4;
-}
-
-.icon {
-  vertical-align: middle;
-  line-height: 1px;
-  font-size: 25px;
-}
-
-.icon_header {
-  vertical-align: middle;
-  line-height: 1px;
-  font-size: 26px;
-}
-
-.icon,
-.icon_header {
-  margin-right: 5px;
-}
-
-.close_icon {
-  color: rgb(255, 255, 255);
-  margin-left: 30px;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-.icon.close_icon {
-  display: none; /* Sembunyikan ikon pada tampilan normal */
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: 215px 1fr 1fr 1fr;
-  grid-template-rows: 0.2fr 3fr;
-  grid-template-areas:
-    "sidebar header header header"
-    "sidebar main main main";
-  height: 100vh;
-}
-
-/* Header */
-.header {
-  grid-area: header;
-  grid-template-columns: 1fr auto; /*Agar icon berada di kanan*/
-  height: 60px;
-  display: grid;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
-}
-
-.header-right {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.notification-icon {
-  position: relative;
-  cursor: pointer;
-}
-
-.notification-dot {
-  position: absolute;
-  bottom: -5px;
-  left: -5px;
-  height: 8px;
-  width: 8px;
-  background-color: rgba(255, 0, 0, 0.852);
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
-}
-
-.notification-message {
-  position: absolute;
-  top: 50px;
-  right: 20px;
-  background: #fff;
-  color: #000;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.notification-icon:hover .notification-dot {
-  background-color: green; /* Warna saat ikon notifikasi dihover */
-}
-
-.menu-icon {
-  display: none;
-}
-/* End Header */
-
-/* Sidebar */
-#Sidebar {
-  grid-area: sidebar;
-  height: 100%;
-  background-color: #363949;
-  overflow-y: auto;
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s ease;
-}
-
-.sidebar-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px 0px 30px;
-  margin-bottom: 30px;
-  position: relative;
-}
-
-.sidebar-title > span {
-  display: none;
-}
-
-.sidebar-brand {
-  margin-top: 15px;
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.sidebar-list {
-  padding: 0;
-  list-style-type: none;
-}
-
-.sidebar-list-item {
-  padding: 20px 20px 20px 20px;
-  font-size: 18px;
-}
-
-.sidebar-list-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-}
-
-.sidebar-list-item > a {
-  text-decoration: none;
-  color: #ffffff;
-  font-size: 0.87rem;
-  font-weight: 500;
-}
-
-.sidebar-responsive {
-  display: inline !important;
-  position: absolute;
-  z-index: 12 !important;
-}
-
-/* End Sidebar */
-
-/* Main */
-
-.main-container {
-  grid-area: main;
-  overflow-y: auto;
-  padding: 20px 20px;
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.main-title {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 800;
-  font-size: 0.88rem;
-  color: #363949;
-  margin-top: -10px;
-}
-
-.main-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin: 10px 0;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: 8px 15px;
-  border-radius: 10px;
-}
-
-.card:first-child {
-  background-color: #ffffff;
-}
-
-.card:nth-child(2) {
-  background-color: #ffffff;
-}
-
-.card:nth-child(3) {
-  background-color: #ffffff;
-}
-
-.card-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.card-icon {
-  font-size: 20px;
-  color: #363949;
-  padding: 10px;
-}
-
-.card-inner > .card_icon {
-  font-size: 25px;
-  background-color: rgba(23, 25, 51, 0.908);
-  padding: 8px 8px;
-  border-radius: 10px;
-  border-radius: 50%;
-}
-
-.charts-wrapper {
-  display: flex;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 25px;
-  justify-content: space-between;
 }
 
 .d-flex {
@@ -267,80 +39,118 @@ h3 {
 }
 
 .unit {
-  margin-left: 30px; /* Adjust spacing as needed */
-  font-size: 1.2rem; /* Adjust font size as needed */
+  color: #000;
   font-weight: bold;
+  margin-right: 15px;
 }
 
-.line-chart {
-  grid-column: span 2;
-  height: 300px;
-  background-color: #ffffff; /* Menambahkan latar belakang untuk line chart */
-  padding: 20px;
-  border-radius: 10px;
-  flex: 1;
+.text-muted {
+  color: #9e9ea4;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /*overflow: hidden;  Mencegah scroll */
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: 50% 35% 15%; /* Mendefinisikan lebar kolom */
+  grid-template-rows: auto 1fr; /* Menyesuaikan tinggi baris */
+  grid-template-areas:
+    "gauge-chart main-cards button"
+    "line-chart line-chart line-chart";
+  gap: 1rem;
+  height: 100vh; /* Menggunakan 100% tinggi viewport */
+  padding: 1rem;
+  box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
 }
 
 .gauge-chart {
-  grid-column: 3; /* Gauge chart akan mengisi kolom ketiga */
-  height: 300px;
-  background-color: #ffffff; /* Menambahkan latar belakang untuk gauge chart */
-  padding: 20px;
-  border-radius: 10px;
-}
-/* End Main */
-
-/* Medium <= 992px*/
-
-@media screen and (max-width: 992px) {
-  .grid-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.2fr 3fr;
-    grid-template-areas:
-      "header"
-      "main";
-  }
-
-  #Sidebar {
-    display: none;
-  }
-
-  .menu-icon {
-    display: inline;
-  }
-
-  .sidebar-list > span {
-    display: inline;
-  }
+  grid-area: gauge-chart;
+  width: 100%; /* Sesuaikan lebar agar muat dalam grid */
+  height: 100%; /* Sesuaikan tinggi agar muat dalam grid */
+  max-width: 100%; /* Pastikan tidak melebihi ukuran grid */
+  max-height: 100%; /* Pastikan tidak melebihi ukuran grid */
+  padding: 10px;
+  box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
+  border: 1px solid #ccc;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Menyelaraskan gauge ke tengah secara horizontal */
 }
 
-/* small <= 768px */
-@media screen and (max-width: 768px) {
-  .main-cards {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin-bottom: 0;
-  }
-  .charts-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .line-chart,
-  .gauge-chart {
-    width: 100%;
-  }
-  .icon.close_icon {
-    display: block; /* Tampilkan ikon pada tampilan kecil */
-  }
+.gauge-chart h3 {
+  align-self: flex-start; /* Menyelaraskan judul ke bagian atas */
+  margin-bottom: 0.5rem; /* Menambahkan margin untuk jarak dari gauge */
 }
 
-/* Extra small <= 576px */
-@media screen and (max-width: 576px) {
-  .header-left {
-    display: none;
-  }
-  .icon.close_icon {
-    display: block; /* Tampilkan ikon pada tampilan kecil */
-  }
+.gauge-chart .valueLabel {
+  font-size: 40px;
+  color: #000;
+  position: relative;
+  z-index: 10; /* Pastikan label tidak tertutup oleh elemen lain */
+}
+
+.main-cards {
+  grid-area: main-cards;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%; /* Sesuaikan lebar agar muat dalam grid */
+  height: 100%; /* Sesuaikan tinggi agar muat dalam grid */
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex: 1; /* Membuat card fleksibel agar muat dalam container */
+  max-width: 100%; /* Pastikan tidak melebihi ukuran container */
+  box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
+}
+
+.card-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.line-chart {
+  grid-area: line-chart;
+  width: 100%; /* Sesuaikan lebar agar muat dalam grid */
+  height: 100%; /* Sesuaikan tinggi agar muat dalam grid */
+  padding: 0.5rem;
+  box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
+  border: 1px solid #ccc;
+  background-color: #fff;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button {
+  grid-area: button;
+  display: flex;
+  justify-content: center; /* Menyelaraskan secara horizontal */
+  align-items: flex-start; /* Menyelaraskan secara vertikal */
+  padding-top: 1rem;
+}
+
+.button button {
+  background-color: #007bff; /* Warna biru */
+  color: white; /* Warna teks */
+  border: none;
+  padding: 10px 20px; /* Padding tombol */
+  font-size: 16px; /* Ukuran font */
+  border-radius: 5px; /* Sudut melengkung */
+  cursor: pointer;
+}
+
+.button button:hover {
+  background-color: #0056b3; /* Warna biru lebih gelap saat hover */
 }
