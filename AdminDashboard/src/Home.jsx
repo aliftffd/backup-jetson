@@ -91,10 +91,10 @@ function Home() {
 
   return (
     <main className='main-container'>
-      <div className='gauge-chart'style={{ flex: 1, maxWidth: '700px' }} >
+      <div className='gauge-chart'>
         <h3>Gauge Chart</h3>
         <GaugeComponent
-          style={{ width: '100%', height: '80%'}} // Atur lebar dan tinggi di sini
+          className='gauge-component'
           arc={{
             nbSubArcs: gaugeLimits.length,
             colorArray: gaugeLimits.map(limit => limit.color),
@@ -146,8 +146,8 @@ function Home() {
         <button onClick={() => alert('Navigasi ke halaman history')}>Go to History</button>
       </div>
       <div className='line-chart'>
-          <h3>Grafik kecepatan terhadap jarak</h3>
-          <ResponsiveContainer width="95%" height={300} margin-bottom="-4px"> {/* Atur lebar dan tinggi di sini */}
+        <h3>Grafik kecepatan terhadap jarak</h3>
+        <ResponsiveContainer width="100%" height={300}>
           <LineChart
             data={distanceData}
             margin={{
@@ -155,12 +155,13 @@ function Home() {
               right: 30,
               left: 5,
               bottom: 9,
-            }}>
+            }}
+          >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="distance" label={{ value: "Distance (km)", position: 'insideBottomRight', offset: 0 }} />
             <YAxis label={{ value: "speed (km/h)", angle: -90, position: 'insideLeft' }}
-              domain={[0, 350]} // Set Y-axis range from 0 to 350
-              ticks={[0, 50, 100, 150, 200, 250, 300, 350]} // Set Y-axis ticks with a gap of 50
+              domain={[0, 350]}
+              ticks={[0, 50, 100, 150, 200, 250, 300, 350]}
             />
             <Tooltip />
             <Legend />

@@ -1,6 +1,3 @@
-@import 'normalize.css';
-
-
 body {
   margin: 0;
   padding: 0;
@@ -15,23 +12,12 @@ h2 {
 h3 {
   font-size: 15px;
   color: #363949;
-  margin-top: 0px;
 }
-
 .App {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
-
-.value .unit {
-  font-size: 1rem; /* Ukuran font untuk satuan */
-  margin-left: 5px; /* Jarak antara angka dan satuan */
-  color: #888; /* Warna font */
-  font-weight: normal; /* Berat font */
-  align-self: flex-end; /* Menyelaraskan satuan dengan bagian bawah angka */
-}
-
 .d-flex {
   display: flex;
 }
@@ -44,92 +30,63 @@ h3 {
 .unit {
   color: #000;
   font-weight: bold;
-  margin-right: 15px;
-}
-
-.text-muted {
-  color: #9e9ea4;
-}
-
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  /*overflow: hidden;  Mencegah scroll */
 }
 
 .main-container {
   display: grid;
-  grid-template-columns: 50% 35% 15%; /* Mendefinisikan lebar kolom */
-  grid-template-rows: auto 1fr; /* Menyesuaikan tinggi baris */
-  grid-template-areas:
-    "gauge-chart main-cards button"
-    "line-chart line-chart line-chart";
-  gap: 1rem;
-  height: 100vh; /* Menggunakan 100% tinggi viewport */
-  padding: 0.5rem;
-  box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
+  grid-template-columns: 3fr 2fr 1fr; /* Gauge chart terbesar, cards sedang, button lebih kecil */
+  grid-template-rows: 2fr 1fr; /* Dua baris dengan lebar yang sama */
+  gap: 20px;
+  padding: 20px;
+  height: 100vh; /* Pastikan grid mengisi viewport */
+  box-sizing: border-box; /* Tambahkan ini untuk memastikan padding dihitung dalam ukuran elemen */
 }
 
 .gauge-chart {
-  grid-area: gauge-chart;
-  width: 100%; /* Sesuaikan lebar agar muat dalam grid */
-  height: 100%; /* Sesuaikan tinggi agar muat dalam grid */
-  max-width: 100%; /* Pastikan tidak melebihi ukuran grid */
-  max-height: 100%; /* Pastikan tidak melebihi ukuran grid */
-  padding: 0.9rem;
-  box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  width: 100%;
+  height: 100%; /* Pastikan elemen mengisi grid */
   border: 1px solid #ccc;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Menyelaraskan gauge ke tengah secara horizontal */
+  box-sizing: border-box; /* Pastikan padding dihitung dalam ukuran elemen */
 }
 
 .gauge-chart h3 {
   align-self: flex-start; /* Menyelaraskan judul ke bagian atas */
-  margin-bottom: 0.5rem; /* Menambahkan margin untuk jarak dari gauge */
+  padding: 0 14px;
 }
 
-.gauge-chart .valueLabel {
-  font-size: 40px;
-  color: #000;
-  position: relative;
-  z-index: 10; /* Pastikan label tidak tertutup oleh elemen lain */
+.gauge-component {
+  width: 100%;
+  flex-grow: 1;
+  box-sizing: border-box;
 }
 
 .main-cards {
-  grid-area: main-cards;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  width: 100%; /* Sesuaikan lebar agar muat dalam grid */
-  height: 100%; /* Sesuaikan tinggi agar muat dalam grid */
+  justify-content: space-between; /* Spasi merata antara kartu */
+  height: 100%; /* Pastikan elemen mengisi grid */
 }
 
 .card {
-  background: #fff;
+  padding: 0px 14px;
   border: 1px solid #ccc;
-  padding: 0.5rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  flex: 1; /* Membuat card fleksibel agar muat dalam container */
-  max-width: 100%; /* Pastikan tidak melebihi ukuran container */
-  box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
-}
-
-.card-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  margin: 2px;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: justify;
+  flex-grow: 1; /* Pastikan kartu tumbuh untuk mengisi ruang yang tersedia */
 }
 
 .button {
-  grid-area: button;
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
   display: flex;
-  justify-content: center; /* Menyelaraskan secara horizontal */
-  align-items: flex-start; /* Menyelaraskan secara vertikal */
-  padding-top: 1rem;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .button button {
@@ -143,19 +100,17 @@ body {
 
 .button button:hover {
   background-color: #0056b3; /* Warna biru lebih gelap saat hover */
-} 
-
-.line-chart {
-  grid-area: line-chart;
-  width: 100%; /* Sesuaikan lebar agar muat dalam grid */
-  height: 100%; /* Sesuaikan tinggi agar muat dalam grid */
-  padding: 0;
-  box-sizing: border-box; /* Memastikan padding tidak menyebabkan overflow */
-  border: 1px solid #ccc;
-  background-color: #fff;
-  flex-direction: column;
-  align-items: center;
-  display: flex;
 }
 
+.line-chart {
+  grid-column: 1 / 4;
+  grid-row: 2 / 3;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+}
 
+.line-chart h3 {
+  align-self: flex-start; /* Menyelaraskan judul ke bagian atas */
+  padding: 0 14px;
+}
