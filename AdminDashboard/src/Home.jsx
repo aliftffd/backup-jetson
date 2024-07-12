@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './App.css'; // File CSS untuk styling
+import React, { useEffect, useState } from 'react';
 import { MdOutlineSpeed, MdTrain, MdLocationOn } from 'react-icons/md';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, ZAxis } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import GaugeComponent from 'react-gauge-component';
 import io from 'socket.io-client';
 
 const MAX_DATA_COUNT = 20;
-const MAX_SPEED = 350;
+const MAX_SPEED = 100;
 const gaugeLimits = [
   { limit: 20, color: '#5BE12C', showTick: true },
   { limit: 40, color: '#F5CD19', showTick: true },
@@ -21,66 +20,113 @@ function Home() {
   const [distanceData, setDistanceData] = useState([]);
   const [totalDistance, setTotalDistance] = useState(0);
   const [prevTimestamp, setPrevTimestamp] = useState(null);
+  const [rfidData, setRfidData] = useState([]);
 
   const kmhToMs = (value) => {
-    return { value: value.toFixed(2), unit: 'km/h' };
+    if (value === undefined) {
+      return { value: 'N/A', unit: 'Cm/s' };
+    }
+    return { value: value, unit: 'Cm/s' };
   };
 
   useEffect(() => {
-    const URL = "http://localhost:5001";
-    const socket = io(URL, {
-      pinTimeout: 30000,
+    const URL1 = "http://localhost:5003";
+    const URL2 = "http://localhost:5000"
+    const socket1 = io(URL1, {
+      pingTimeout: 30000,
       pingInterval: 5000,
       upgradeTimeout: 30000,
       cors: {
-        origin: "http://localhost:5001",
+        origin: "http://localhost:5174",
+      }
+    });
+    const socket2 = io(URL2,{
+      pingTimeout: 30000,
+      pingInterval: 5000,
+      upgradeTimeout: 30000,
+      cors: {
+        origin: "http://localhost:5174",
       }
     });
 
-    socket.connect();
-    socket.on("connect_error", (err) => {
+    socket1.connect();
+    socket2.connect(); 
+
+    socket1.on("connect_error", (err) => {
       console.log(`connect_error due to ${err.message}`);
     });
+    socket2.on("conncect_error",(err) =>{
+      console.log(`connect_error due to ${err.message}`);
+    })
 
-    socket.on('connect', () => {
+    socket1.on('connect', () => {
       setSocketConnected(true);
     });
 
-    socket.on('disconnect', () => {
+    socket1.on('disconnect', () => {
       setSocketConnected(false);
     });
 
-    socket.on('sensorData', ({ value, date }) => {
-      const newTimestamp = new Date(date).getTime();
+    socket2.on('connect', () => {
+      setSocketConnected(true);
+    });
 
+    socket2.on('disconnect', () => {
+      setSocketConnected(false);
+    });
+
+
+    socket1.on('sensorData', (data) => {
+      const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
+      const { value, timestamp } = parsedData;
+      const newTimestamp = new Date(timestamp).getTime();
+    
       setSensorData(prevData => {
         const newData = [...prevData, { date: newTimestamp, speed: value }].slice(-MAX_DATA_COUNT);
-
+        setGaugeValue(value);
+    
         if (prevTimestamp !== null) {
-          const timeDiff = (newTimestamp - prevTimestamp) / 3600; // perbedaan waktu dalam jam
-          const incrementalDistance = value * timeDiff; // jarak dalam kilometer
+          const timeDiff = (newTimestamp - prevTimestamp) / 3600000; // time difference in hours
+          const incrementalDistance = value * timeDiff; // distance in kilometers
+    
           setTotalDistance(prevDistance => {
             const updatedDistance = prevDistance + incrementalDistance;
-            return parseFloat(updatedDistance.toFixed(2)); // memastikan dua angka di belakang koma
+            return parseFloat(updatedDistance.toFixed(2)); // ensure two decimal places
           });
-
+    
           const updatedDistanceData = newData.map((point, index) => ({
             ...point,
             distance: (index === 0 ? 0 : (totalDistance + incrementalDistance)).toFixed(2),
           }));
-
+    
           setDistanceData(updatedDistanceData);
         }
-
+    
         setPrevTimestamp(newTimestamp);
         return newData;
       });
-
-      setGaugeValue(value);
     });
-
+    
+    socket2.on('rfid_data', (data) => {
+      console.log('Received rfid_data event:', data); // Log the received data
+  
+      try {
+          const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
+          console.log('Parsed data:', parsedData); // Log the parsed data
+  
+          setRfidData(prevData => {
+              const updatedData = [...prevData, parsedData].slice(-MAX_DATA_COUNT);
+              console.log('Updated rfidData state:', updatedData); // Log the updated state
+              return updatedData;
+          });
+      } catch (error) {
+          console.error('Error parsing data:', error); // Log any parsing errors
+      }
+      setGaugeValue(value)
+  });
     return () => {
-      socket.disconnect();
+      socket1.disconnect();
+      socket2.disconnect();
     };
   }, [prevTimestamp, totalDistance]);
 
@@ -104,7 +150,7 @@ function Home() {
           labels={{
             valueLabel: {
               fontSize: 40,
-              formatTextValue: value => `${value.toFixed(2)} km/h`
+              formatTextValue: value => `${value.toFixed(2)} cm/s`
             }
           }}
           value={gaugeValue}
@@ -128,16 +174,18 @@ function Home() {
           </div>
           <div className="d-flex align-items-center">
             <h2>{totalDistance.toFixed(2)}</h2>
-            <span className="unit">km</span>
+            <span className="unit">Cm</span>
           </div>
           {/*<small className="text-muted">Posisi terhadap Jarak</small>*/}
         </div>
         <div className='card'>
           <div className='card-inner'>
             <h3>Blocking</h3>
+            <MdLocationOn className='card_icon' />
           </div>
           <div className="d-flex align-items-center">
-            <h2>42</h2> {/* untuk dihubungkan dengan sensor */}
+            <h2>{rfidData.length > 0 ? rfidData[rfidData.length - 1].name:'Stand by ...'}</h2> {/* untuk dihubungkan dengan sensor */}
+            <h3>{rfidData.length > 0 ? rfidData[rfidData.length - 1].tag_id:'Reading ...'}</h3>
           </div>
           {/*<small className="text-muted">Posisi Kereta</small>*/}
         </div>
@@ -159,7 +207,7 @@ function Home() {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="distance" label={{ value: "Distance (km)", position: 'insideBottomRight', offset: 0 }} />
-            <YAxis label={{ value: "speed (km/h)", angle: -90, position: 'insideLeft' }}
+            <YAxis label={{ value: "speed (Cm/s)", angle: -90, position: 'insideLeft' }}
               domain={[0, 350]}
               ticks={[0, 50, 100, 150, 200, 250, 300, 350]}
             />
